@@ -31,8 +31,7 @@ public class TransactionController {
             responseReference = "Page<Transaction>")
     public ResponseEntity<Page<Transaction>> getAllTransactions(TransactionRequestDo transactionRequestDo) {
 
-        return ResponseEntity.ok(transactionService.retrieveAll
-                Transactions(transactionRequestDo));
+        return ResponseEntity.ok(transactionService.retrieveAllTransactions(transactionRequestDo));
     }
 
 }
