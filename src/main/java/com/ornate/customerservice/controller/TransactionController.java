@@ -6,6 +6,7 @@ import com.ornate.customerservice.model.dto.TransactionRequestDo;
 import com.ornate.customerservice.service.TransactionService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("customers")
 @Api(value = "customers")
+@Slf4j
 public class TransactionController {
 
     private final TransactionService transactionService;
