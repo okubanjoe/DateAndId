@@ -1,0 +1,53 @@
+spring:
+  application:
+    name: customer-service
+  datasource:
+    url: jdbc:mysql://localhost:3306/customerdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&allowPublicKeyRetrieval=true&useSSL=false
+    username: root
+    password: Programmer@231
+
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    properties.hibernate.dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+    #database-platform: org.hibernate.dialect.MySQL5Dialect
+    hibernate.ddl-auto: update
+    hibernate.enable_lazy_load_no_trans: true
+
+
+logging:
+  file: logs/application.log
+  file.max-size: 200MB
+  level:
+    org.apache.http: DEBUG
+    org.springframework.cloud.sleuth: INFO
+    com.netflix.discovery.DiscoveryClient: INFO
+    com.etz.merchantservice: DEBUG
+
+management:
+  server:
+    port: 9090
+  health:
+    db.enabled: true
+  endpoints:
+    web.exposure.include: health,info,metrics,hystrix,prometheus,refresh
+
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+
+server:
+  port: 8080
+  compression:
+    enabled: true
+    min-response-size: 1
+
+hystrix:
+  command:
+    default:
+      execution.isolation.thread.timeoutInMilliseconds: 5000
+      circuitBreaker.errorThresholdPercentage: 60
+      circuitBreaker.sleepWindowInMilliseconds: 20000
+      circuitBreaker.requestVolumeThreshold: 10
+
+
