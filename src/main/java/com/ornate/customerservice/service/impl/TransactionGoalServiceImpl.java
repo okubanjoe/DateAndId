@@ -19,7 +19,7 @@ public class TransactionGoalServiceImpl implements TransactionGoalService {
 
     @Override
     public TransactionGoal createTransactionGoal(String goalName) {
-        log.info("about to create a transaction goal {} ");
+        log.info("about to create a transaction goal {} ", goalName);
         if(StringUtils.isBlank(goalName)) {
             throw new IllegalArgumentException("Goal Name must be provided");
         }
@@ -31,6 +31,7 @@ public class TransactionGoalServiceImpl implements TransactionGoalService {
 
     @Override
     public TransactionGoal getTransactionGoalById(Long id)  {
-        return transactionGoalRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Goal not found"));
+        return transactionGoalRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Goal not found"));
     }
 }

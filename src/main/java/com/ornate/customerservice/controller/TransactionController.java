@@ -14,8 +14,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("customers")
-@Api(value = "customers")
+@RequestMapping("transactions")
+@Api(value = "transactions")
 @Slf4j
 public class TransactionController {
 
@@ -44,5 +44,35 @@ public class TransactionController {
 
         return ResponseEntity.ok(transactionService.createTransaction(transactionRequestDo));
     }
+
+    @PutMapping("/{id}")
+    @ApiOperation(value = "update transactions",
+            notes = "update user ",
+            produces = MediaType.APPLICATION_JSON_VALUE,
+            response = Transaction.class)
+    public ResponseEntity<Transaction> updateTransactions(@PathVariable("id") Long id ,
+                                                          @RequestBody TransactionDto transactionRequestDo) throws Exception {
+
+        return ResponseEntity.ok(transactionService.updateTransaction(id, transactionRequestDo));
+    }
+
+    @GetMapping("/{id}")
+    @ApiOperation(value = "find by id  transactions",
+            notes = "find by id",
+            produces = MediaType.APPLICATION_JSON_VALUE,
+            response = Transaction.class)
+    public ResponseEntity<Transaction> getTransactionById(@PathVariable("id") Long id ) throws Exception {
+
+        return ResponseEntity.ok(transactionService.retrieveTransactionById(id));
+    }
+
+    @DeleteMapping("/{id}")
+    @ApiOperation(value = "find by id  transactions",
+            notes = "find by id",
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public void deleteTransactionById(@PathVariable("id") Long id ) {
+        transactionService.deleteTransaction(id);
+    }
+
 
 }
