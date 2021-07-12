@@ -2,6 +2,7 @@ package com.ornate.customerservice.controller;
 
 
 import com.ornate.customerservice.model.Transaction;
+import com.ornate.customerservice.model.dto.TransactionDto;
 import com.ornate.customerservice.model.dto.TransactionRequestDo;
 import com.ornate.customerservice.service.TransactionService;
 import io.swagger.annotations.Api;
@@ -10,9 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("customers")
@@ -34,6 +33,16 @@ public class TransactionController {
     public ResponseEntity<Page<Transaction>> getAllTransactions(TransactionRequestDo transactionRequestDo) {
 
         return ResponseEntity.ok(transactionService.retrieveAllTransactions(transactionRequestDo));
+    }
+
+    @PostMapping
+    @ApiOperation(value = "create transactions",
+            notes = "create user ",
+            produces = MediaType.APPLICATION_JSON_VALUE,
+            response = Transaction.class)
+    public ResponseEntity<Transaction> addTransactions(@RequestBody TransactionDto transactionRequestDo) throws Exception {
+
+        return ResponseEntity.ok(transactionService.createTransaction(transactionRequestDo));
     }
 
 }
