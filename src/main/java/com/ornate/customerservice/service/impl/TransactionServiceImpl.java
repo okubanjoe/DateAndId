@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -117,5 +118,18 @@ public class TransactionServiceImpl implements TransactionService {
         log.info("about to delete transaction by id {} ", id);
         Transaction transaction = retrieveTransactionById(id);
         transactionRepository.delete(transaction);
+    }
+
+    @Override
+    public List<Transaction> retrieveAllTransactions() {
+        return transactionRepository.findAll();
+    }
+
+    @Override
+    public List<Transaction> retrieveTransactionByGoalId(Long goalId) throws Exception {
+        TransactionGoal transactionGoal = transactionGoalService
+                .getTransactionGoalById(goalId);
+
+        return transactionRepository.findAllTransactionByGoal(transactionGoal);
     }
 }

@@ -13,6 +13,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("transactions")
 @Api(value = "transactions")
@@ -64,6 +66,27 @@ public class TransactionController {
     public ResponseEntity<Transaction> getTransactionById(@PathVariable("id") Long id ) throws Exception {
 
         return ResponseEntity.ok(transactionService.retrieveTransactionById(id));
+    }
+
+
+    @GetMapping("/all")
+    @ApiOperation(value = "find by id  transactions",
+            notes = "find by id",
+            produces = MediaType.APPLICATION_JSON_VALUE,
+            response = Transaction.class)
+    public ResponseEntity<List<Transaction>> getAllTransactions(){
+
+        return ResponseEntity.ok(transactionService.retrieveAllTransactions());
+    }
+
+    @GetMapping("/transaction/goalId/{goalId}")
+    @ApiOperation(value = "find by id  transactions",
+            notes = "find by id",
+            produces = MediaType.APPLICATION_JSON_VALUE,
+            response = Transaction.class)
+    public ResponseEntity<List<Transaction>> getTransactionsByGoalId(@PathVariable("goalId") Long goalId ) throws Exception {
+
+        return ResponseEntity.ok(transactionService.retrieveTransactionByGoalId(goalId));
     }
 
     @DeleteMapping("/{id}")

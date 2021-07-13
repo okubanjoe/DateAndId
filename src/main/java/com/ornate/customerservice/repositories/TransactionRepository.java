@@ -1,6 +1,7 @@
 package com.ornate.customerservice.repositories;
 
 import com.ornate.customerservice.model.Transaction;
+import com.ornate.customerservice.model.TransactionGoal;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -10,6 +11,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.time.Instant;
+import java.util.List;
 
 @Repository
 public interface TransactionRepository extends JpaRepository<Transaction, Long>, JpaSpecificationExecutor<Transaction> {
@@ -25,4 +27,7 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long>,
                                            @Param("endDate")Instant endDate,
                                            @Param("id") Long id,
                                            Pageable pageable);
+
+    @Query("select t from transaction t where t.transactionGoal = ?1 order by t.createdDate desc")
+    List<Transaction> findAllTransactionByGoal(TransactionGoal transactionGoal);
 }

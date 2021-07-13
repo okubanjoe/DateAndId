@@ -5,6 +5,8 @@ import com.ornate.customerservice.model.dto.TransactionDto;
 import com.ornate.customerservice.model.dto.TransactionRequestDo;
 import org.springframework.data.domain.Page;
 
+import java.util.List;
+
 public interface TransactionService {
 
     Page<Transaction> retrieveAllTransactions(TransactionRequestDo transactionRequestDo);
@@ -16,4 +18,8 @@ public interface TransactionService {
     Transaction retrieveTransactionById(Long id);
 
     void deleteTransaction(Long id);
+
+    List<Transaction> retrieveAllTransactions();
+
+    List<Transaction> retrieveTransactionByGoalId(Long goalId) throws Exception;
 }
