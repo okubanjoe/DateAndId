@@ -51,3 +51,6 @@ hystrix:
       circuitBreaker.requestVolumeThreshold: 10
 
 
+
+
+

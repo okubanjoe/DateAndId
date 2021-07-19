@@ -27,4 +27,9 @@ public class Transaction {
     @ToString.Exclude
     @ManyToOne
     private TransactionGoal transactionGoal;
+
+
+    //    @ManyToOne(fetch = FetchType.LAZY, targetEntity = User.class)
+//    @JoinColumn(name = "iduser", insertable = false, updatable = false)
 }
+
