@@ -1,11 +1,11 @@
 package com.ornate.customerservice.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+
 import com.google.gson.Gson;
 import com.ornate.customerservice.model.Transaction;
 import com.ornate.customerservice.model.TransactionGoal;
 import com.ornate.customerservice.model.dto.TransactionDto;
-import com.ornate.customerservice.repositories.TransactionGoalRepository;
+
 import com.ornate.customerservice.service.TransactionGoalService;
 import com.ornate.customerservice.service.TransactionService;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,7 +16,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -25,11 +24,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -100,6 +95,7 @@ class TransactionControllerTest {
         transaction.setId(transactionId);
 
         when(transactionGoalService.getTransactionGoalById(1L)).thenReturn(transactionGoal);
+        when(transactionService.createTransaction(transactionDto())).thenReturn(transaction);
 
         mockMvc.perform(post("/transactions")
                 .contentType(MediaType.APPLICATION_JSON)
