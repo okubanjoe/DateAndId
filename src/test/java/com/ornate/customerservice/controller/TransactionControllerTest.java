@@ -6,6 +6,7 @@ import com.ornate.customerservice.model.Transaction;
 import com.ornate.customerservice.model.TransactionGoal;
 import com.ornate.customerservice.model.dto.TransactionDto;
 import com.ornate.customerservice.repositories.TransactionGoalRepository;
+import com.ornate.customerservice.service.TransactionGoalService;
 import com.ornate.customerservice.service.TransactionService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -49,7 +50,7 @@ class TransactionControllerTest {
     TransactionService transactionService;
 
     @MockBean
-    TransactionGoalRepository transactionGoalRepository;
+    TransactionGoalService transactionGoalService;
 
 
     @Autowired
@@ -57,13 +58,34 @@ class TransactionControllerTest {
 
     String transactionJson;
 
+    String updateTransactionJson;
+
 
     @BeforeEach
     void setup() {
         transactionJson = gson.toJson(transactionDto());
+        updateTransactionJson = gson.toJson(updatedTransactionDto());
     }
 
-    private Transaction transactionDto() {
+    private TransactionDto transactionDto() {
+        TransactionGoal transactionGoal = new TransactionGoal();
+        transactionGoal.setId(1L);
+
+       return TransactionDto.builder()
+                .amount(1000.00)
+                .charge(100.00)
+                .goalId(1L)
+                .reference(""+System.nanoTime())
+                .build();
+    }
+
+
+    @Test
+    @DisplayName("POST `/transactions`")
+    void addTransactions() throws Exception {
+
+        Long transactionId = 1L;
+
         TransactionGoal transactionGoal = new TransactionGoal();
         transactionGoal.setGoalName("Goal1");
         transactionGoal.setId(1L);
@@ -75,14 +97,10 @@ class TransactionControllerTest {
         transaction.setReference(""+System.nanoTime());
         transaction.setCreatedDate(Instant.now());
         transaction.setCreatedBy("System");
+        transaction.setId(transactionId);
 
-        return transaction;
-    }
+        when(transactionGoalService.getTransactionGoalById(1L)).thenReturn(transactionGoal);
 
-
-    @Test
-    @DisplayName("POST `/transactions`")
-    void addTransactions() throws Exception {
         mockMvc.perform(post("/transactions")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(transactionJson))
@@ -109,32 +127,24 @@ class TransactionControllerTest {
 
 
         when(transactionService.retrieveTransactionById(transactionId)).thenReturn(transaction);
-        when(transactionGoalRepository.findById(transactionGoal.getId())).thenReturn(Optional.of(transactionGoal));
+        when(transactionGoalService.getTransactionGoalById(transactionGoal.getId())).thenReturn(transactionGoal);
 
-        Transaction updatedTransactionDto = updateTransactionDto();
-
-        TransactionDto transactionDto = TransactionDto.builder()
-                .reference(updatedTransactionDto.getReference())
-                .goalId(transactionGoal.getId())
-                .charge(updatedTransactionDto.getCharge())
-                .amount(updatedTransactionDto.getAmount())
-                .build();
-
-        String updatedJson = gson.toJson(transactionDto);
-
-        when(transactionService.updateTransaction(transactionId, transactionDto)).thenReturn(updateTransactionDto());
+        when(transactionService.updateTransaction(transactionId, updatedTransactionDto())).thenReturn(updateTransactionDto());
 
         mockMvc.perform(put("/transactions/"+ transactionId)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(updatedJson))
+                .content(updateTransactionJson))
                 .andExpect(status().isOk()).andDo(print());
     }
 
     private Transaction updateTransactionDto() {
-        Transaction createdTransaction = transactionDto();
+
+        TransactionGoal transactionGoal = new TransactionGoal();
+        transactionGoal.setGoalName("Goal1");
+        transactionGoal.setId(1L);
 
         Transaction transaction = new Transaction();
-        transaction.setTransactionGoal(createdTransaction.getTransactionGoal());
+        transaction.setTransactionGoal(transactionGoal);
         transaction.setCharge(400.0);
         transaction.setAmount(3000.0);
         transaction.setReference(""+System.nanoTime());
@@ -145,6 +155,16 @@ class TransactionControllerTest {
         transaction.setId(1L);
 
         return transaction;
+    }
+
+    private TransactionDto updatedTransactionDto() {
+       return TransactionDto.builder()
+                .reference(""+System.nanoTime())
+                .goalId(1L)
+                .charge(100.00)
+                .amount(2000.00)
+                .build();
+
     }
 
     @Test
@@ -211,6 +231,7 @@ class TransactionControllerTest {
     }
 
     @Test
+    @DisplayName("GET `/transactions/transaction/goalId/{goalId}`")
     void getTransactionsByGoalId() throws Exception {
         Long transactionId = 1L;
 
@@ -248,6 +269,7 @@ class TransactionControllerTest {
     }
 
     @Test
+    @DisplayName("DELETE `/transactions/{id}`")
     void deleteTransactionById() throws Exception {
         Long transactionId = 1L;
 
