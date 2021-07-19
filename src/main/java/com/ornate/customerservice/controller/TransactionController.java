@@ -93,8 +93,9 @@ public class TransactionController {
     @ApiOperation(value = "find by id  transactions",
             notes = "find by id",
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public void deleteTransactionById(@PathVariable("id") Long id ) {
+    public ResponseEntity<Void> deleteTransactionById(@PathVariable("id") Long id ) {
         transactionService.deleteTransaction(id);
+        return ResponseEntity.noContent().build();
     }
 
 
