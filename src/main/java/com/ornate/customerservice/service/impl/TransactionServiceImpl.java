@@ -84,6 +84,6 @@ public class TransactionServiceImpl implements TransactionService {
         TransactionGoal transactionGoal = transactionGoalService
                 .getTransactionGoalById(goalId);
 
-        return transactionRepository.findAllTransactionByGoal(transactionGoal);
+        return transactionRepository.findByTransactionGoalIdOrderByCreatedDate(transactionGoal);
     }
 }
