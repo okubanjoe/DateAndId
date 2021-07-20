@@ -27,15 +27,7 @@ public class TransactionController {
         this.transactionService = transactionService;
     }
 
-    @GetMapping
-    @ApiOperation(value = "get all customers in paginated format",
-            notes = "date format should be this (YYYY-MM-DDTHH:mm:ss.SSSZ)",
-            produces = MediaType.APPLICATION_JSON_VALUE,
-            responseReference = "Page<Transaction>")
-    public ResponseEntity<Page<Transaction>> getAllTransactions(TransactionRequestDo transactionRequestDo) {
 
-        return ResponseEntity.ok(transactionService.retrieveAllTransactions(transactionRequestDo));
-    }
 
     @PostMapping
     @ApiOperation(value = "create transactions",

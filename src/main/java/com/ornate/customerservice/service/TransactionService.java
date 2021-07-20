@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface TransactionService {
 
-    Page<Transaction> retrieveAllTransactions(TransactionRequestDo transactionRequestDo);
+
 
     Transaction createTransaction(TransactionDto transactionDto) throws Exception;
     
