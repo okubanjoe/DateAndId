@@ -28,6 +28,6 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long>,
                                            @Param("id") Long id,
                                            Pageable pageable);
 
-    @Query("select t from transaction t where t.transactionGoal = ?1 order by t.createdDate desc")
-    List<Transaction> findAllTransactionByGoal(TransactionGoal transactionGoal);
+    //@Query("select t from transaction t where t.transactionGoal = ?1 order by t.createdDate desc")
+    List<Transaction> findByTransactionGoalIdOrderByCreatedDate(TransactionGoal transactionGoal);
 }
