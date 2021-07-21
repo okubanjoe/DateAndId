@@ -93,7 +93,7 @@ class TransactionServiceTest extends BaseTestClass {
 
 
     @Test
-    void retrieveAllTransactions() {
+    void retrieveAllTransactions() throws Exception {
         TransactionGoal transactionGoal = new TransactionGoal();
         transactionGoal.setGoalName("Goal1");
         transactionGoal.setId(1L);

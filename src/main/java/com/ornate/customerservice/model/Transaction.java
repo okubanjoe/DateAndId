@@ -25,7 +25,7 @@ public class Transaction {
 
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private TransactionGoal transactionGoal;
 
 

@@ -3,21 +3,14 @@ package com.ornate.customerservice.service.impl;
 import com.ornate.customerservice.model.Transaction;
 import com.ornate.customerservice.model.TransactionGoal;
 import com.ornate.customerservice.model.dto.TransactionDto;
-import com.ornate.customerservice.model.dto.TransactionRequestDo;
-import com.ornate.customerservice.model.dto.TransactionSearchTerm;
 import com.ornate.customerservice.repositories.TransactionRepository;
 import com.ornate.customerservice.service.TransactionGoalService;
 import com.ornate.customerservice.service.TransactionService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 @Service
 @Slf4j
@@ -75,15 +68,25 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     @Override
-    public List<Transaction> retrieveAllTransactions() {
-        return transactionRepository.findAll();
-    }
+    public List<Transaction> retrieveAllTransactions() throws Exception {
+        List<Transaction> availableTransactions = new ArrayList<>();
 
+        List<TransactionGoal> transactionGoal = transactionGoalService.getallTgetTransactionGoal();
+
+        if (transactionGoal.size() > 0) {
+            for (TransactionGoal tGoals : transactionGoal) {
+                List<Transaction> transFoarGoal = retrieveTransactionByGoalId(tGoals.getId());
+                availableTransactions.addAll(transFoarGoal);
+
+            }
+        }
+            return availableTransactions;
+    }
     @Override
     public List<Transaction> retrieveTransactionByGoalId(Long goalId) throws Exception {
         TransactionGoal transactionGoal = transactionGoalService
                 .getTransactionGoalById(goalId);
 
-        return transactionRepository.findByTransactionGoalIdOrderByCreatedDate(transactionGoal);
+        return transactionRepository.findByTransactionGoalIdOrderByCreatedDate(goalId);
     }
 }
