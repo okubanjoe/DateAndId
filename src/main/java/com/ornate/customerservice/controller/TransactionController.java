@@ -66,7 +66,7 @@ public class TransactionController {
             notes = "find by id",
             produces = MediaType.APPLICATION_JSON_VALUE,
             response = Transaction.class)
-    public ResponseEntity<List<Transaction>> getAllTransactions(){
+    public ResponseEntity<List<Transaction>> getAllTransactions() throws Exception {
 
         return ResponseEntity.ok(transactionService.retrieveAllTransactions());
     }
@@ -76,7 +76,7 @@ public class TransactionController {
             notes = "find by id",
             produces = MediaType.APPLICATION_JSON_VALUE,
             response = Transaction.class)
-    public ResponseEntity<List<Transaction>> getTransactionsByGoalId(@PathVariable("goalId") Long goalId ) throws Exception {
+    public ResponseEntity<List<Transaction>> getTransactionsByGoalId(@PathVariable(required = false) Long goalId ) throws Exception {
 
         return ResponseEntity.ok(transactionService.retrieveTransactionByGoalId(goalId));
     }

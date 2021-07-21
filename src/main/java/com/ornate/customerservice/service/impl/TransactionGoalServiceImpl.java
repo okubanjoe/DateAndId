@@ -7,6 +7,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @Slf4j
 public class TransactionGoalServiceImpl implements TransactionGoalService {
@@ -35,5 +37,8 @@ public class TransactionGoalServiceImpl implements TransactionGoalService {
                 .orElseThrow(() -> new IllegalArgumentException("Goal not found"));
     }
 
-
+    @Override
+    public List<TransactionGoal> getallTgetTransactionGoal() throws Exception {
+        return transactionGoalRepository.findAll();
+    }
 }

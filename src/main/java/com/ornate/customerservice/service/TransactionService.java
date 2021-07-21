@@ -18,7 +18,7 @@ public interface TransactionService {
 
     void deleteTransaction(Long id);
 
-    List<Transaction> retrieveAllTransactions();
+    List<Transaction> retrieveAllTransactions() throws Exception;
 
     List<Transaction> retrieveTransactionByGoalId(Long goalId) throws Exception;
 
