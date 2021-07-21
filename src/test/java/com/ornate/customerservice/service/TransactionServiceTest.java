@@ -129,4 +129,56 @@ class TransactionServiceTest extends BaseTestClass {
 
     }
 
+    @Test
+    void getAllTransactions() {
+
+        TransactionGoal transactionGoal = new TransactionGoal();
+        transactionGoal.setGoalName("Goal1");
+        transactionGoal.setId(1L);
+
+        TransactionGoal transactionGoal2 = new TransactionGoal();
+        transactionGoal.setGoalName("Goal2");
+        transactionGoal.setId(2L);
+
+        TransactionGoal transactionGoal3 = new TransactionGoal();
+        transactionGoal.setGoalName("Goal3");
+        transactionGoal.setId(3L);
+
+        List<TransactionGoal> transactionGoals = new ArrayList<>();
+        transactionGoals.add(transactionGoal);
+        transactionGoals.add(transactionGoal2);
+        transactionGoals.add(transactionGoal3);
+
+        Transaction transaction = new Transaction();
+        transaction.setAmount(1000.0);
+        transaction.setCharge(100.0);
+        transaction.setReference(UUID.randomUUID().toString());
+        transaction.setCreatedBy("user@gmail.com");
+        transaction.setCreatedDate(Instant.now());
+        transaction.setTransactionGoal(transactionGoal);
+        transaction.setId(1L);
+
+        Transaction transaction2 = new Transaction();
+        transaction2.setAmount(2000.0);
+        transaction2.setCharge(100.0);
+        transaction2.setReference(UUID.randomUUID().toString());
+        transaction2.setCreatedBy("user@gmail.com");
+        transaction2.setCreatedDate(Instant.now());
+        transaction2.setTransactionGoal(transactionGoal2);
+        transaction2.setId(2L);
+
+        Transaction transaction3 = new Transaction();
+        transaction3.setAmount(2000.0);
+        transaction3.setCharge(100.0);
+        transaction3.setReference(UUID.randomUUID().toString());
+        transaction3.setCreatedBy("user@gmail.com");
+        transaction3.setCreatedDate(Instant.now());
+        transaction3.setTransactionGoal(transactionGoal2);
+        transaction3.setId(3L);
+
+        List<Transaction> transactions = new ArrayList<>();
+        transactions.add(transaction);
+        transactions.add(transaction2);
+        transactions.add(transaction3);
+    }
 }

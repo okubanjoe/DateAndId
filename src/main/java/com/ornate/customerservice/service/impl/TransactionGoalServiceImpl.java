@@ -34,4 +34,6 @@ public class TransactionGoalServiceImpl implements TransactionGoalService {
         return transactionGoalRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Goal not found"));
     }
+
+
 }

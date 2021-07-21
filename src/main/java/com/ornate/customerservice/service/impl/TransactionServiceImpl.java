@@ -16,8 +16,10 @@ import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -85,5 +87,16 @@ public class TransactionServiceImpl implements TransactionService {
                 .getTransactionGoalById(goalId);
 
         return transactionRepository.findAllTransactionByGoal(transactionGoal);
+    }
+
+
+    @Override
+    public List<Transaction> getAllTransactions(List<TransactionGoal> transactionGoals) throws Exception {
+        List<Transaction> transactions = new ArrayList<>();
+
+        for (TransactionGoal transactionGoal : transactionGoals) {
+           transactions = retrieveTransactionByGoalId(transactionGoal.getId());
+        }
+       return transactions;
     }
 }
