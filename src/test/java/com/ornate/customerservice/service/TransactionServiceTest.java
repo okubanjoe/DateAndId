@@ -127,6 +127,12 @@ class TransactionServiceTest extends BaseTestClass {
         assertThat(foundTransactions.size()).isPositive();
         assertThat(foundTransactions.size()).isEqualTo(2);
 
+
+        for(Transaction transaction1 : foundTransactions) {
+            assertThat(transaction1.getId()).isEqualTo(transaction.getId());
+        }
+
+
     }
 
 }

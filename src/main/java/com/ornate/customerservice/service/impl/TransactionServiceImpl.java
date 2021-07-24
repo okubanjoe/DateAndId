@@ -75,8 +75,8 @@ public class TransactionServiceImpl implements TransactionService {
 
         if (transactionGoal.size() > 0) {
             for (TransactionGoal tGoals : transactionGoal) {
-                List<Transaction> transFoarGoal = retrieveTransactionByGoalId(tGoals.getId());
-                availableTransactions.addAll(transFoarGoal);
+                List<Transaction> transForGoal = retrieveTransactionByGoalId(tGoals.getId());
+                availableTransactions.addAll(transForGoal);
 
             }
         }
@@ -88,5 +88,10 @@ public class TransactionServiceImpl implements TransactionService {
                 .getTransactionGoalById(goalId);
 
         return transactionRepository.findByTransactionGoalIdOrderByCreatedDate(goalId);
+    }
+
+    @Override
+    public List<Transaction> getAllTransactions(List<TransactionGoal> transactionGoals) throws Exception {
+        return null;
     }
 }
