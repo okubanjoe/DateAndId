@@ -1,7 +1,9 @@
 package com.ornate.customerservice.service.impl;
 
+import com.ornate.customerservice.model.GoalCategory;
 import com.ornate.customerservice.model.TransactionGoal;
 import com.ornate.customerservice.repositories.TransactionGoalRepository;
+import com.ornate.customerservice.service.GoalCategoryService;
 import com.ornate.customerservice.service.TransactionGoalService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -14,9 +16,12 @@ import java.util.List;
 public class TransactionGoalServiceImpl implements TransactionGoalService {
 
     private final TransactionGoalRepository transactionGoalRepository;
+    private final GoalCategoryService goalCategoryService;
 
-    public TransactionGoalServiceImpl(TransactionGoalRepository transactionGoalRepository) {
+    public TransactionGoalServiceImpl(TransactionGoalRepository transactionGoalRepository,
+                                      GoalCategoryService goalCategoryService) {
         this.transactionGoalRepository = transactionGoalRepository;
+        this.goalCategoryService = goalCategoryService;
     }
 
     @Override
@@ -32,13 +37,26 @@ public class TransactionGoalServiceImpl implements TransactionGoalService {
     }
 
     @Override
+    public TransactionGoal createTransactionGoal(TransactionGoal transactionGoal) {
+        GoalCategory foundGoalCategory =
+                goalCategoryService.retrieveGoalCategory(transactionGoal.getGoalCategory().getId());
+        if(foundGoalCategory == null) {
+            throw new IllegalArgumentException("Invalid Goal category");
+        }
+        TransactionGoal goal = new TransactionGoal();
+        goal.setGoalCategory(foundGoalCategory);
+        goal.setGoalName(transactionGoal.getGoalName());
+        return transactionGoalRepository.save(goal);
+    }
+
+    @Override
     public TransactionGoal getTransactionGoalById(Long id)  {
         return transactionGoalRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Goal not found"));
     }
 
     @Override
-    public List<TransactionGoal> getallTgetTransactionGoal() throws Exception {
+    public List<TransactionGoal> getAllTransactionGoals() throws Exception {
         return transactionGoalRepository.findAll();
     }
 }

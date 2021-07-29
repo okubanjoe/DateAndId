@@ -71,7 +71,7 @@ public class TransactionServiceImpl implements TransactionService {
     public List<Transaction> retrieveAllTransactions() throws Exception {
         List<Transaction> availableTransactions = new ArrayList<>();
 
-        List<TransactionGoal> transactionGoal = transactionGoalService.getallTgetTransactionGoal();
+        List<TransactionGoal> transactionGoal = transactionGoalService.getAllTransactionGoals();
 
         if (transactionGoal.size() > 0) {
             for (TransactionGoal tGoals : transactionGoal) {

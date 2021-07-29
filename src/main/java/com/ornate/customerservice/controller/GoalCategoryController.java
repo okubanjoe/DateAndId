@@ -19,7 +19,6 @@ import java.util.List;
 @RequestMapping("category")
 @Api(value = "category")
 @Slf4j
-
 public class GoalCategoryController {
 
     private final GoalCategoryService goalCategoryService;
