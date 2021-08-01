@@ -2,10 +2,8 @@ package com.ornate.customerservice.model;
 
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity(name = "goal_category")
 @Data
@@ -15,4 +13,5 @@ public class GoalCategory {
     private Long id;
     private String categoryName;
     private String description;
+
 }

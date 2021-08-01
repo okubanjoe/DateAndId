@@ -16,9 +16,8 @@ public class TransactionGoal {
 
     private String goalName;
 
-    @EqualsAndHashCode.Exclude
-    @ToString.Exclude
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
+    @JoinColumn(name = "goal_category_id")
     private GoalCategory goalCategory;
 
 
