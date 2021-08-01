@@ -3,6 +3,7 @@ package com.ornate.customerservice.service;
 import com.ornate.customerservice.BaseTestClass;
 import com.ornate.customerservice.model.GoalCategory;
 import com.ornate.customerservice.model.TransactionGoal;
+import com.ornate.customerservice.model.dto.TransactionGoalRequestDto;
 import com.ornate.customerservice.repositories.GoalCategoryRepository;
 import com.ornate.customerservice.repositories.TransactionGoalRepository;
 import com.ornate.customerservice.service.impl.GoalCategoryServiceImpl;
@@ -48,6 +49,34 @@ class TransactionGoalServiceTest  {
         transactionGoal.setGoalName("Goal");
         transactionGoal.setGoalCategory(goalCategory);
         transactionGoal.setId(1L);
+
+        when(goalCategoryService.retrieveGoalCategory(anyLong())).thenReturn(goalCategory);
+        when(transactionGoalRepository.save(any())).thenReturn(transactionGoal);
+
+        TransactionGoal savedGoal = transactionGoalService.createTransactionGoal(transactionGoal);
+
+        assertThat(savedGoal).isNotNull();
+        assertThat(savedGoal.getId()).isEqualTo(transactionGoal.getId());
+        assertThat(savedGoal.getGoalCategory()).isNotNull();
+    }
+
+
+    @Test
+    void createTransactionGoal_1() {
+        TransactionGoalRequestDto transactionGoalRequestDto = new TransactionGoalRequestDto();
+        transactionGoalRequestDto.setCategoryId(1L);
+        transactionGoalRequestDto.setGoalName("GOAL");
+
+        GoalCategory goalCategory = new GoalCategory();
+        goalCategory.setCategoryName("Test1");
+        goalCategory.setDescription("Testing");
+        goalCategory.setId(1L);
+
+        TransactionGoal transactionGoal =   new TransactionGoal();
+        transactionGoal.setGoalName("GOAL");
+        transactionGoal.setGoalCategory(goalCategory);
+        transactionGoal.setId(1L);
+
 
         when(goalCategoryService.retrieveGoalCategory(anyLong())).thenReturn(goalCategory);
         when(transactionGoalRepository.save(any())).thenReturn(transactionGoal);

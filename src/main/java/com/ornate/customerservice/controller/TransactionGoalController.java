@@ -3,6 +3,7 @@ package com.ornate.customerservice.controller;
 import com.ornate.customerservice.model.Transaction;
 import com.ornate.customerservice.model.TransactionGoal;
 import com.ornate.customerservice.model.dto.TransactionDto;
+import com.ornate.customerservice.model.dto.TransactionGoalRequestDto;
 import com.ornate.customerservice.service.TransactionGoalService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -15,8 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("goal")
-@Api(value = "goal")
+@RequestMapping("transactionGoal")
+@Api(value = "transactionGoal")
 @Slf4j
 public class TransactionGoalController {
 
@@ -31,7 +32,7 @@ public class TransactionGoalController {
             notes = "create transaction goal ",
             produces = MediaType.APPLICATION_JSON_VALUE,
             response = TransactionGoal.class)
-    public ResponseEntity<TransactionGoal> createTransactionGoal(@RequestBody TransactionGoal transactionRequestDo) throws Exception {
+    public ResponseEntity<TransactionGoal> createTransactionGoal(@RequestBody TransactionGoalRequestDto transactionRequestDo) throws Exception {
 
         return ResponseEntity.ok(transactionGoalService.createTransactionGoal(transactionRequestDo));
     }

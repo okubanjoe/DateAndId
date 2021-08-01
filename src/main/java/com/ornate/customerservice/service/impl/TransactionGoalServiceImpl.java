@@ -2,6 +2,7 @@ package com.ornate.customerservice.service.impl;
 
 import com.ornate.customerservice.model.GoalCategory;
 import com.ornate.customerservice.model.TransactionGoal;
+import com.ornate.customerservice.model.dto.TransactionGoalRequestDto;
 import com.ornate.customerservice.repositories.TransactionGoalRepository;
 import com.ornate.customerservice.service.GoalCategoryService;
 import com.ornate.customerservice.service.TransactionGoalService;
@@ -47,6 +48,18 @@ public class TransactionGoalServiceImpl implements TransactionGoalService {
         goal.setGoalCategory(foundGoalCategory);
         goal.setGoalName(transactionGoal.getGoalName());
         return transactionGoalRepository.save(goal);
+    }
+
+    @Override
+    public TransactionGoal createTransactionGoal(TransactionGoalRequestDto transactionGoalRequestDto) {
+        GoalCategory foundGoalCategory =
+                goalCategoryService.retrieveGoalCategory(transactionGoalRequestDto.getCategoryId());
+
+        TransactionGoal transactionGoal = new TransactionGoal();
+        transactionGoal.setGoalCategory(foundGoalCategory);
+        transactionGoal.setGoalName(transactionGoalRequestDto.getGoalName());
+
+        return transactionGoalRepository.save(transactionGoal);
     }
 
     @Override
