@@ -136,8 +136,5 @@ class TransactionGoalServiceTest  {
 
         assertThat(goals.isEmpty()).isFalse();
         assertThat(goals.size()).isPositive();
-
-
-
     }
 }
