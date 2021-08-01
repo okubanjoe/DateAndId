@@ -21,6 +21,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 
 class TransactionGoalServiceTest  {
@@ -122,7 +123,7 @@ class TransactionGoalServiceTest  {
         transactionGoal.setId(1L);
 
         TransactionGoal transactionGoal2 =   new TransactionGoal();
-        transactionGoal2.setGoalName("Goal");
+        transactionGoal2.setGoalName("Goal2");
         transactionGoal2.setGoalCategory(goalCategory);
         transactionGoal2.setId(2L);
 
@@ -136,5 +137,23 @@ class TransactionGoalServiceTest  {
 
         assertThat(goals.isEmpty()).isFalse();
         assertThat(goals.size()).isPositive();
+    }
+
+    @Test
+    void deleteGoal() {
+        GoalCategory goalCategory = new GoalCategory();
+        goalCategory.setCategoryName("Home Services");
+        goalCategory.setDescription("Home Services Desc");
+        goalCategory.setId(1L);
+
+        TransactionGoal transactionGoal =   new TransactionGoal();
+        transactionGoal.setGoalName("Goal");
+        transactionGoal.setGoalCategory(goalCategory);
+        transactionGoal.setId(1L);
+
+        when(transactionGoalRepository.findById(anyLong())).thenReturn(Optional.of(transactionGoal));
+        doNothing().when(transactionGoalRepository).delete(transactionGoal);
+
+        transactionGoalService.deleteByGoalId(transactionGoal.getId());
     }
 }

@@ -11,4 +11,6 @@ public interface TransactionGoalService {
     TransactionGoal createTransactionGoal(TransactionGoalRequestDto transactionGoalRequestDto);
     TransactionGoal getTransactionGoalById(Long id) throws Exception;
     List<TransactionGoal> getAllTransactionGoals() throws  Exception;
+
+    void deleteByGoalId(Long id);
  }

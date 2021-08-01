@@ -19,7 +19,9 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -73,6 +75,19 @@ class TransactionGoalControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(gson.toJson(transactionGoalRequestDto)))
                 .andExpect(status().isOk()).andDo(print());
+    }
+
+    @Test
+    @DisplayName("DELETE `/transactionGoal/{id}`")
+    void deleteTransactionById() throws Exception {
+
+        Long goalId = 1L;
+
+        doNothing().when(transactionGoalService).deleteByGoalId(goalId);
+
+        mockMvc.perform(delete("/transactionGoal/"+ goalId)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNoContent());
     }
 
 }

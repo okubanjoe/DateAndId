@@ -72,4 +72,10 @@ public class TransactionGoalServiceImpl implements TransactionGoalService {
     public List<TransactionGoal> getAllTransactionGoals() throws Exception {
         return transactionGoalRepository.findAll();
     }
+
+    @Override
+    public void deleteByGoalId(Long id) {
+        TransactionGoal foundTransactionGoal = getTransactionGoalById(id);
+        transactionGoalRepository.delete(foundTransactionGoal);
+    }
 }

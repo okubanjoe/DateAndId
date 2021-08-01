@@ -10,10 +10,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("transactionGoal")
@@ -35,5 +32,14 @@ public class TransactionGoalController {
     public ResponseEntity<TransactionGoal> createTransactionGoal(@RequestBody TransactionGoalRequestDto transactionRequestDo) throws Exception {
 
         return ResponseEntity.ok(transactionGoalService.createTransactionGoal(transactionRequestDo));
+    }
+
+    @DeleteMapping("/{id}")
+    @ApiOperation(value = "Delete Goal by Id",
+            notes = "delete goal  by id",
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Void> deleteTransactionById(@PathVariable("id") Long id ) throws Exception {
+        transactionGoalService.deleteByGoalId(id);
+        return ResponseEntity.noContent().build();
     }
 }
